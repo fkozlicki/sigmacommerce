@@ -27,6 +27,7 @@ export default async function Page({
 						width={600}
 						height={600}
 						className="bg-accent rounded-lg"
+						priority
 					/>
 					{images.length > 1 && (
 						<div className="flex justify-center gap-4 absolute bottom-4 left-1/2 -translate-x-1/2">

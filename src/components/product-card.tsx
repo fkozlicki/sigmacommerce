@@ -12,6 +12,7 @@ export default function ProductCard({ id, title, price, thumbnail }: Product) {
 					width={176}
 					height={176}
 					className="bg-accent rounded-xl"
+					priority
 				/>
 				<div>
 					<p className="font-medium">{title}</p>
