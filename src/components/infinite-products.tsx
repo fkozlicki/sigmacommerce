@@ -1,11 +1,11 @@
 'use client';
 
-import { Product, productService } from '@/services/products';
-import { useState } from 'react';
-import ProductsGrid from './products-grid';
-import { Button } from './ui/button';
+import { useInfiniteProducts } from '@/hooks/use-infinite-products';
+import { Product } from '@/services/products';
 import { LoaderIcon } from 'lucide-react';
+import ProductsGrid from './products-grid';
 import ProductsGridSkeleton from './products-grid-skeleton';
+import { Button } from './ui/button';
 
 interface InfiniteProductsProps {
 	initialProducts: Product[];
@@ -16,29 +16,17 @@ export default function InfiniteProducts({
 	initialProducts,
 	perPage,
 }: InfiniteProductsProps) {
-	const [products, setProducts] = useState(initialProducts);
-	const [isLoading, setIsLoading] = useState(false);
-	const [page, setPage] = useState(1);
-
-	async function onClick() {
-		setIsLoading(true);
-
-		const { data } = await productService.getAll(perPage, page * perPage);
-
-		if (data) {
-			setProducts((prev) => [...prev, ...data.products]);
-			setPage((prev) => prev + 1);
-		}
-
-		setIsLoading(false);
-	}
+	const { isLoading, loadMore, products } = useInfiniteProducts(
+		initialProducts,
+		perPage
+	);
 
 	return (
 		<div className="space-y-3">
 			<ProductsGrid products={products} />
 			{isLoading && <ProductsGridSkeleton />}
 			<div className="py-4 flex justify-center">
-				<Button onClick={onClick} disabled={isLoading} className="w-28">
+				<Button onClick={loadMore} disabled={isLoading} className="w-28">
 					{isLoading ? (
 						<LoaderIcon className="size-4 animate-spin" />
 					) : (
