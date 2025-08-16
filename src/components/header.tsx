@@ -7,6 +7,7 @@ export default function Header() {
 		<header className="h-24 border-b px-10 flex items-center justify-between">
 			<Link href="/">
 				<Logo />
+				<span className="sr-only">Home</span>
 			</Link>
 			<SearchProducts />
 		</header>
